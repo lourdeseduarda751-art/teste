@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartinha Especial - Animada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7e6e9; /* Fundo rosa claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden; /* Evita scroll durante a animação inicial */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            opacity: 0; /* Começa invisível para a animação */
+            transform: scale(0.8) translateY(20px); /* Começa menor e um pouco abaixo */
+            animation: fadeInScale 1.5s ease-out forwards; /* Animação de entrada */
+        }
+
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        h1 {
+            color: #d1648a; /* Cor rosa vibrante para o título */
+            font-size: 2.5em;
+            margin-bottom: 25px;
+        }
+
+        .texto-principal {
+            text-align: center; /* Centraliza a nova mensagem curta */
+            margin-bottom: 25px;
+            color: #333;
+            line-height: 1.6;
+            font-size: 1.8em; /* Aumenta a fonte para a mensagem principal */
+            font-weight: bold;
+            color: #d1648a; /* Cor rosa mais forte para o texto */
+        }
+
+        .destaque-frase {
+            /* Mantido, mas não será usado para a mensagem principal */
+            background-color: #ffe3e8;
+            border-left: 5px solid #d1648a;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 8px;
+            display: none; /* Esconde este bloco para a nova mensagem */
+        }
+
+        .assinatura {
+            margin-top: 30px;
+            font-weight: bold;
+            color: #555;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Uma Mensagem Especial!</h1>
+
+        <div class="texto-principal">
+            <p>te adoro boboca</p>
+        </div>
+
+        <div class="destaque-frase">
+            <p>"Aqui iria a frase anterior se quisesse usá-la."</p>
+        </div>
+
+        <p class="assinatura">Com todo o carinho ❤️</p>
+    </div>
+
+    <script>
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                localStorage.setItem('cartinhaLida', 'true');
+            }
+        });
+
+        window.addEventListener('beforeunload', function (e) {
+            localStorage.setItem('cartinhaLida', 'true');
+        });
+
+        window.onload = function() {
+            if (localStorage.getItem('cartinhaLida') === 'true') {
+                document.body.innerHTML = '';
+                document.body.style.display = 'block';
+                document.body.style.backgroundColor = '#f7e6e9';
+                
+                const mensagem = document.createElement('div');
+                mensagem.className = 'container';
+                mensagem.style.opacity = '1'; /* Garante que a mensagem de expiração seja visível */
+                mensagem.style.transform = 'none'; /* Remove a transformação inicial */
+                
+                mensagem.innerHTML = `
+                    <h1>🥺 Mensagem Expirada 🥺</h1>
+                    <div class="texto-principal" style="text-align: center; color: #555; font-size: 1.2em;">
+                        <p>Esta mensagem especial já foi lida e o carinho já foi recebido!</p>
+                        <p>Guarde a lembrança com carinho.</p>
+                    </div>
+                `;
+                
+                document.body.appendChild(mensagem);
+            }
+        }
+    </script>
+
+</body>
+</html>
